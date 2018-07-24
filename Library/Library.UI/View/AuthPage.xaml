@@ -1,0 +1,74 @@
+﻿<Page x:Class="Library.UI.View.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Library.UI.View"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+		TextElement.FontWeight="Regular"
+		TextElement.FontSize="13"
+		TextOptions.TextFormattingMode="Ideal"
+		TextOptions.TextRenderingMode="Auto"
+		Background="{DynamicResource MaterialDesignPaper}"
+		FontFamily="{DynamicResource MaterialDesignFont}"
+	  d:DesignHeight="300" d:DesignWidth="300"
+      Title="AuthPage">
+
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="0.5*"/>
+			<RowDefinition Height="0.5*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+		<TextBlock 
+			Grid.Row="0"
+			HorizontalAlignment="Center" 
+			VerticalAlignment="Center"
+			Text="Log In"
+			Width="100"
+			TextAlignment="Center"
+			FontSize="24" Margin="124,28,120,10.2"/>
+		<TextBox
+			Grid.Row="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="200"
+			Text="{Binding Path=Login}"
+			materialDesign:HintAssist.Hint="Username"/>
+		<PasswordBox
+			Name="passwordBox"
+			Grid.Row="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Width="200"
+			Height="25"
+			materialDesign:HintAssist.Hint="Password"/>
+		<StackPanel
+			Grid.Row="3" 
+			Margin="0 5 0 0" 
+			Orientation="Vertical"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Center">
+			<Button 
+				BorderThickness="0"
+				Width="200"
+				Content="Log in"
+				Background="#FF3580BF" 
+				Click="Login"/>
+			<TextBlock 
+				Margin="0 5 0 5"
+				HorizontalAlignment="Center" 
+				Text="Or" />
+			<Button 
+				BorderThickness="0"
+				Width="200"
+				Content="Sign in"
+				Background="#FF3580BF" 
+				Click="Register"/>
+		</StackPanel>
+	</Grid>
+</Page>

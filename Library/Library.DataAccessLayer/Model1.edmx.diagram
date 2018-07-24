@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3a424bfbb0e94675be3f95c86a821b01" Name="Diagram1">
+        <EntityTypeShape EntityType="librarydbModel.author" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="librarydbModel.book" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="librarydbModel.client" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="librarydbModel.offer" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="librarydbModel.request" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="librarydbModel.author_id" ManuallyRouted="false" />
+        <AssociationConnector Association="librarydbModel.book_id" ManuallyRouted="false" />
+        <AssociationConnector Association="librarydbModel.idBook" ManuallyRouted="false" />
+        <AssociationConnector Association="librarydbModel.client_id" ManuallyRouted="false" />
+        <AssociationConnector Association="librarydbModel.client_name" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

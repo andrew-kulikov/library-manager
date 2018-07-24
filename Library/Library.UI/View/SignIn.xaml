@@ -1,0 +1,97 @@
+﻿<Page x:Class="Library.UI.View.SignIn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Library.UI.View"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+	  TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+	  TextElement.FontWeight="Regular"
+	  TextElement.FontSize="13"
+	  TextOptions.TextFormattingMode="Ideal"
+	  TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+	  FontFamily="{DynamicResource MaterialDesignFont}"
+	  d:DesignHeight="300" d:DesignWidth="300"
+      Title="SignIn">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30"/>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Click="Back_Click">
+			<materialDesign:PackIcon Kind="ArrowLeftBold"/>
+		</Button>
+		<TextBox
+			x:Name="Name"
+			Grid.Row="1"
+			Grid.Column="0"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="100"
+			materialDesign:HintAssist.Hint="Name"/>
+		<TextBox
+			x:Name="Age"
+			Grid.Row="2"
+			Grid.Column="0"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="100"
+			materialDesign:HintAssist.Hint="Age"/>
+		<TextBox
+			x:Name="Sex"
+			Grid.Row="3"
+			Grid.Column="0"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="100"
+			materialDesign:HintAssist.Hint="Sex"/>
+		<TextBox
+			x:Name="Login"
+			Grid.Row="1"
+			Grid.Column="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="100"
+			materialDesign:HintAssist.Hint="Login"/>
+		<PasswordBox
+			x:Name="Password"
+			Grid.Row="2"
+			Grid.Column="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="100"
+			materialDesign:HintAssist.Hint="Password"/>
+		<PasswordBox
+			x:Name="CheckPassword"
+			Grid.Row="3"
+			Grid.Column="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Height="25"
+			Width="100"
+			materialDesign:HintAssist.Hint="Repeat Password"/>
+		<Button
+			Grid.ColumnSpan="2"
+			Grid.Row="4"
+			HorizontalAlignment="Center"
+			BorderThickness="0"
+			Width="200"
+			Content="Sign in"
+			Background="#FF3580BF" 
+			Click="Register"/>
+	</Grid>
+</Page>

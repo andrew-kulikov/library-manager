@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="librarydbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="authors">
+          <Key>
+            <PropertyRef Name="idAutrhors" />
+          </Key>
+          <Property Name="idAutrhors" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="birth_year" Type="uint" Nullable="false" />
+          <Property Name="bio" Type="varchar" MaxLength="5000" />
+        </EntityType>
+        <EntityType Name="books">
+          <Key>
+            <PropertyRef Name="idBook" />
+          </Key>
+          <Property Name="idBook" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="isbn" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="depositCost" Type="int" Nullable="false" />
+          <Property Name="rentCost" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="author_id" Type="int" Nullable="false" />
+          <Property Name="jenres" Type="set" />
+          <Property Name="pages" Type="int" Nullable="false" />
+          <Property Name="amount" Type="uint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="clientId" />
+          </Key>
+          <Property Name="clientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="balance" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="offers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="deadline" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="45" />
+          <Property Name="book_id" Type="int" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="requests">
+          <Key>
+            <PropertyRef Name="idRequests" />
+          </Key>
+          <Property Name="idRequests" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="book_id" Type="int" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="author_id">
+          <End Role="authors" Type="Self.authors" Multiplicity="1" />
+          <End Role="books" Type="Self.books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authors">
+              <PropertyRef Name="idAutrhors" />
+            </Principal>
+            <Dependent Role="books">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="book_id">
+          <End Role="books" Type="Self.books" Multiplicity="1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="client_id">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="clientId" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="client_name">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="offers" Type="Self.offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="clientId" />
+            </Principal>
+            <Dependent Role="offers">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idBook">
+          <End Role="books" Type="Self.books" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="offers" Type="Self.offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="offers">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="librarydbModelStoreContainer">
+          <EntitySet Name="authors" EntityType="Self.authors" Schema="librarydb" store:Type="Tables" />
+          <EntitySet Name="books" EntityType="Self.books" Schema="librarydb" store:Type="Tables" />
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="librarydb" store:Type="Tables" />
+          <EntitySet Name="offers" EntityType="Self.offers" Schema="librarydb" store:Type="Tables" />
+          <EntitySet Name="requests" EntityType="Self.requests" Schema="librarydb" store:Type="Tables" />
+          <AssociationSet Name="author_id" Association="Self.author_id">
+            <End Role="authors" EntitySet="authors" />
+            <End Role="books" EntitySet="books" />
+          </AssociationSet>
+          <AssociationSet Name="book_id" Association="Self.book_id">
+            <End Role="books" EntitySet="books" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="client_id" Association="Self.client_id">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="client_name" Association="Self.client_name">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="offers" EntitySet="offers" />
+          </AssociationSet>
+          <AssociationSet Name="idBook" Association="Self.idBook">
+            <End Role="books" EntitySet="books" />
+            <End Role="offers" EntitySet="offers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="librarydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="author">
+          <Key>
+            <PropertyRef Name="idAutrhors" />
+          </Key>
+          <Property Name="idAutrhors" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="birth_year" Type="Int64" Nullable="false" />
+          <Property Name="bio" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="books" Relationship="Self.author_id" FromRole="authors" ToRole="books" />
+        </EntityType>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="idBook" />
+          </Key>
+          <Property Name="idBook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isbn" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="depositCost" Type="Int32" Nullable="false" />
+          <Property Name="rentCost" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="author_id" Type="Int32" Nullable="false" />
+          <Property Name="jenres" Type="String" MaxLength="65531" FixedLength="false" Unicode="false" />
+          <Property Name="pages" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="author" Relationship="Self.author_id" FromRole="books" ToRole="authors" />
+          <NavigationProperty Name="requests" Relationship="Self.book_id" FromRole="books" ToRole="requests" />
+          <NavigationProperty Name="offers" Relationship="Self.idBook" FromRole="books" ToRole="offers" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="clientId" />
+          </Key>
+          <Property Name="clientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="balance" Type="Decimal" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="requests" Relationship="Self.client_id" FromRole="clients" ToRole="requests" />
+          <NavigationProperty Name="offers" Relationship="Self.client_name" FromRole="clients" ToRole="offers" />
+        </EntityType>
+        <EntityType Name="offer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="deadline" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="book" Relationship="Self.idBook" FromRole="offers" ToRole="books" />
+          <NavigationProperty Name="client" Relationship="Self.client_name" FromRole="offers" ToRole="clients" />
+        </EntityType>
+        <EntityType Name="request">
+          <Key>
+            <PropertyRef Name="idRequests" />
+          </Key>
+          <Property Name="idRequests" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="book" Relationship="Self.book_id" FromRole="requests" ToRole="books" />
+          <NavigationProperty Name="client" Relationship="Self.client_id" FromRole="requests" ToRole="clients" />
+        </EntityType>
+        <Association Name="author_id">
+          <End Role="authors" Type="Self.author" Multiplicity="1" />
+          <End Role="books" Type="Self.book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authors">
+              <PropertyRef Name="idAutrhors" />
+            </Principal>
+            <Dependent Role="books">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="book_id">
+          <End Role="books" Type="Self.book" Multiplicity="1" />
+          <End Role="requests" Type="Self.request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idBook">
+          <End Role="books" Type="Self.book" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="offers" Type="Self.offer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="idBook" />
+            </Principal>
+            <Dependent Role="offers">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="client_id">
+          <End Role="clients" Type="Self.client" Multiplicity="1" />
+          <End Role="requests" Type="Self.request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="clientId" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="client_name">
+          <End Role="clients" Type="Self.client" Multiplicity="1" />
+          <End Role="offers" Type="Self.offer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="clientId" />
+            </Principal>
+            <Dependent Role="offers">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="librarydbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="authors" EntityType="Self.author" />
+          <EntitySet Name="books" EntityType="Self.book" />
+          <EntitySet Name="clients" EntityType="Self.client" />
+          <EntitySet Name="offers" EntityType="Self.offer" />
+          <EntitySet Name="requests" EntityType="Self.request" />
+          <AssociationSet Name="author_id" Association="Self.author_id">
+            <End Role="authors" EntitySet="authors" />
+            <End Role="books" EntitySet="books" />
+          </AssociationSet>
+          <AssociationSet Name="book_id" Association="Self.book_id">
+            <End Role="books" EntitySet="books" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="idBook" Association="Self.idBook">
+            <End Role="books" EntitySet="books" />
+            <End Role="offers" EntitySet="offers" />
+          </AssociationSet>
+          <AssociationSet Name="client_id" Association="Self.client_id">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="client_name" Association="Self.client_name">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="offers" EntitySet="offers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="librarydbModelStoreContainer" CdmEntityContainer="librarydbEntities">
+          <EntitySetMapping Name="authors">
+            <EntityTypeMapping TypeName="librarydbModel.author">
+              <MappingFragment StoreEntitySet="authors">
+                <ScalarProperty Name="idAutrhors" ColumnName="idAutrhors" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="birth_year" ColumnName="birth_year" />
+                <ScalarProperty Name="bio" ColumnName="bio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="librarydbModel.book">
+              <MappingFragment StoreEntitySet="books">
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="isbn" ColumnName="isbn" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="depositCost" ColumnName="depositCost" />
+                <ScalarProperty Name="rentCost" ColumnName="rentCost" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="jenres" ColumnName="jenres" />
+                <ScalarProperty Name="pages" ColumnName="pages" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="librarydbModel.client">
+              <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="clientId" ColumnName="clientId" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="offers">
+            <EntityTypeMapping TypeName="librarydbModel.offer">
+              <MappingFragment StoreEntitySet="offers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="deadline" ColumnName="deadline" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests">
+            <EntityTypeMapping TypeName="librarydbModel.request">
+              <MappingFragment StoreEntitySet="requests">
+                <ScalarProperty Name="idRequests" ColumnName="idRequests" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
